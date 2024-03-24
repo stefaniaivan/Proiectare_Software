@@ -33,10 +33,38 @@ public class BiletController {
             return "Ticket with ID " + id +" does not exist";
     }
 
-    /*@PutMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public String update(@PathVariable int id, @RequestBody Bilet updatedBilet) {
-        Optional<Bilet> existingTicket = biletService.getBiletById(id);
-    }*/
+        Optional<Bilet> existingTicketOptional = biletService.getBiletById(id);
+        if(existingTicketOptional.isPresent()){
+            Bilet existingTicket = existingTicketOptional.get();
+            if (updatedBilet.getOrasPlecare() != null) {
+                existingTicket.setOrasPlecare(updatedBilet.getOrasPlecare());
+            }
+            if (updatedBilet.getOrasDestinatie() != null) {
+                existingTicket.setOrasDestinatie(updatedBilet.getOrasDestinatie());
+            }
+            if (updatedBilet.getOraPlecare() != null) {
+                existingTicket.setOraPlecare(updatedBilet.getOraPlecare());
+            }
+            if (updatedBilet.getDataPlecare() != null) {
+                existingTicket.setDataPlecare(updatedBilet.getDataPlecare());
+            }
+            if (updatedBilet.getPret() != null) {
+                existingTicket.setPret(updatedBilet.getPret());
+            }
+            if (updatedBilet.getLocuriDisponibile() != 0) {
+                existingTicket.setLocuriDisponibile(updatedBilet.getLocuriDisponibile());
+            }
+            if (updatedBilet.getLocuriOcupate() != 0) {
+                existingTicket.setLocuriOcupate(updatedBilet.getLocuriOcupate());
+            }
+            biletService.saveBilet(existingTicket);
+            return "Ticket with ID " + id + " has been updated";
+        }
+        else
+            return "Ticket with ID " + id + " does not exist";
+    }
 
     @GetMapping("/getAll")
     public List<Bilet> list(){
