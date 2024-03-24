@@ -15,17 +15,33 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Aceasta metoda permite adaugarea unui obiect de tipul User in baza de date.
+     * @param user reprezinta obicetul pe care ne dorim sa-l adaugam in baza de date
+     * @return un mesaj de succes dupa ce obiectul a fost adaugat in baza de date
+     */
     @PostMapping("/add")
     public String add(@RequestBody User user){
         userService.saveUser(user);
         return "New user is added";
     }
 
+    /**
+     * Aceasta metoda returneaza utilizatorul din baza de date aferent id-ului trimis ca si parametru.
+     * @param id fiecare obiect din baza de date are un id unic.
+     *           In functie de id-ul specificat se returneaza utilizatorul corespunzator
+     * @return un obiect optional care contine utilizatorul cu id-ul specificat sau un obiect gol in cazul in care id-ul nu exista
+     */
     @GetMapping("/getById/{id}")
     public Optional<User> getUserById(@PathVariable int id){
         return userService.getUserById(id);
     }
 
+    /**
+     * Aceasta metoda permite stergerea unui obiect de tipul User din baza de date in functie de id.
+     * @param id id-ul utilizatorului care se doreste a fi sters
+     * @return un mesaj de succes in cazul in care obiectul a fost sters sau un mesaj care indica faptul ca obiectul nu exista in baza de date
+     */
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable int id){
         Optional<User> existingUser = userService.getUserById(id);
@@ -37,6 +53,12 @@ public class UserController {
             return "User with ID " + id +" does not exist";
     }
 
+    /**
+     * Aceasta metoda permite modificarea unui obiect User deja existent in baza de date.
+     * @param id id-ul obiectului pe care dorim sa-l modificam
+     * @param updatedUser un obiect de tipul User care contine datele actualizate pe care dorim sa le introducem in baza de date
+     * @return mesaj de succes in cazul in care utilizatorul a fost modificat sau un mesaj care indica faptul ca utilizatorul cu id-ul specificat nu exista
+     */
     @PutMapping("/update/{id}")
     public String update(@PathVariable int id, @RequestBody User updatedUser) {
         Optional<User> existingUserOptional = userService.getUserById(id);

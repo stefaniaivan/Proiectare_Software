@@ -16,12 +16,22 @@ public class BiletController {
     @Autowired
     private BiletService biletService;
 
+    /**
+     * Aceasta metoda permite adaugarea unui obiect de tipul Bilet in baza de date.
+     * @param bilet reprezinta obicetul pe care ne dorim sa-l adaugam in baza de date
+     * @return un mesaj de succes dupa ce obiectul a fost adaugat in baza de date
+     */
     @PostMapping("/add")
     public String add(@RequestBody Bilet bilet){
         biletService.saveBilet(bilet);
         return "New ticket is added";
     }
 
+    /**
+     * Aceasta metoda permite stergerea unui obiect de tipul Bilet din baza de date in functie de id.
+     * @param id id-ul biletului care se doreste a fi sters
+     * @return un mesaj de succes in cazul in care obiectul a fost sters sau un mesaj care indica faptul ca obiectul nu exista in baza de date
+     */
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable int id){
         Optional<Bilet> existingTicket = biletService.getBiletById(id);
@@ -33,6 +43,12 @@ public class BiletController {
             return "Ticket with ID " + id +" does not exist";
     }
 
+    /**
+     * Aceasta metoda permite modificarea unui obiect Bilet deja existent in baza de date.
+     * @param id id-ul obiectului pe care dorim sa-l modificam
+     * @param updatedBilet un obiect de tipul Bilet care contine datele actualizate pe care dorim sa le introducem in baza de date
+     * @return mesaj de succes in cazul in care biletul a fost modificat sau un mesaj care indica faptul ca biletul cu id-ul specificat nu exista
+     */
     @PutMapping("/update/{id}")
     public String update(@PathVariable int id, @RequestBody Bilet updatedBilet) {
         Optional<Bilet> existingTicketOptional = biletService.getBiletById(id);
@@ -66,11 +82,20 @@ public class BiletController {
             return "Ticket with ID " + id + " does not exist";
     }
 
+    /**
+     * Aceasta metoda permite vizualizarea tuturor obiectelor de tipul Bilet.
+     * @return o lista care contine toate biletele din tabelul aferent din baza de date
+     */
     @GetMapping("/getAll")
     public List<Bilet> list(){
         return biletService.getAllBilete();
     }
 
+    /**
+     * Aceasta metoda returneaza biletul din baza de date aferent id-ului trimis ca si parametru.
+     * @param id in functie de id-ul specificat se returneaza biletul corespunzator
+     * @return un obiect optional care contine biletul cu id-ul specificat sau un obiect gol in cazul in care biletul cu id-ul specificat nu exista
+     */
     @GetMapping("/getById/{id}")
     public Optional<Bilet> getBiletById(@PathVariable int id){
         return biletService.getBiletById(id);
