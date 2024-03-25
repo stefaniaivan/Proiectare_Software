@@ -11,5 +11,5 @@ Functionalitati:
 - utilizatorul trebuie sa poata introduce datele personale ale pasagerilor de pe un bilet;
 - utilizatorul trebuie sa primeasca confirmarea rezervarii dupa completarea tuturor pasilor;
 
-<img alt="Javatpoint" src="Downloads/db_diagram.png"/> 
+<img alt="Javatpoint" src="db_diagram.png"/> 
 
