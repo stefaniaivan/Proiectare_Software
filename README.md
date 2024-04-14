@@ -1,6 +1,10 @@
 # Proiectare_Software
 # Aplicatie a unei companii aeriene pentru vanzarea biletelor de avion:
-Functionalitati: 
+Documentatia proiectului:
+Acest proiect, dezvoltat cu ajutorul platformei Spring Boot, are ca scop crearea unei mediu virtual destinat rezervarii si cumpararii biletelor de avion, avand ca scop livrarea unei experiente eficiente utilizatorilor.
+
+#Descriere generala
+Aplicatia ofera urmatoarele functionalitati principale: 
 
 - cautarea zborurilor in functie de niste campuri pe care utilizatorul le completeaza(orasul de plecare, orasul destinatie, data plecarii, optional retur);
 - daca nu exista un zbor direct, se afiseaza zboruri cu escala;
