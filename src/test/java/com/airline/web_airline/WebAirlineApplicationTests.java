@@ -8,6 +8,7 @@ class WebAirlineApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

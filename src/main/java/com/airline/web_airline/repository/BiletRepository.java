@@ -11,7 +11,6 @@ import java.util.Optional;
 @Repository
 public interface BiletRepository extends JpaRepository<Bilet,Integer> {
     List<Bilet> findBiletsByOrasPlecare(String orasPlecare);
-
     List<Bilet> findBiletsByOrasPlecareAndOrasDestinatieAndDataPlecareIsAfter(String orasPlecare, Optional<String> orasDestinatie, Optional<LocalDate> dataPlecare);
 
 }

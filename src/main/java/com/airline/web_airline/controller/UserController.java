@@ -6,6 +6,7 @@ import com.airline.web_airline.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -78,5 +79,10 @@ public class UserController {
         }
         else
             return "User with ID " + id + " does not exist";
+    }
+
+    @GetMapping("/getAll")
+    public List<User> list(){
+        return userService.getAllUsers();
     }
 }

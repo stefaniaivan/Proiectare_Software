@@ -1,8 +1,10 @@
 package com.airline.web_airline.controller;
 
+import com.airline.web_airline.NotificationService;
 import com.airline.web_airline.model.Bilet;
 import com.airline.web_airline.service.BiletService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class BiletController {
     @Autowired
     private BiletService biletService;
+    @Autowired
+    private NotificationService notificationService;
 
     /**
      * Aceasta metoda permite adaugarea unui obiect de tipul Bilet in baza de date.
@@ -76,6 +80,7 @@ public class BiletController {
                 existingTicket.setLocuriOcupate(updatedBilet.getLocuriOcupate());
             }
             biletService.saveBilet(existingTicket);
+            notificationService.notifyUserAboutTicketPrice(id, updatedBilet.getPret());
             return "Ticket with ID " + id + " has been updated";
         }
         else
