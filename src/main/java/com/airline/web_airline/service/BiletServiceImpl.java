@@ -62,5 +62,4 @@ public class BiletServiceImpl implements BiletService {
     public List<Bilet> findByQuery(String orasPlecare, Optional<String> orasDestinatie, Optional<LocalDate> dataPlecare) {
         return biletRepository.findBiletsByOrasPlecareAndOrasDestinatieAndDataPlecareIsAfter(orasPlecare,orasDestinatie,dataPlecare );
     }
-
 }

@@ -9,9 +9,6 @@ import java.util.Optional;
 public interface BiletService {
     public Bilet saveBilet(Bilet bilet);
     public List<Bilet> getAllBilete();
-
-    //public Bilet getBiletById(int id);
-
     public Optional<Bilet> getBiletById(int id);
     public void deleteBiletById(int id);
     List<Bilet> findByOrasPlecare(String orasPlecare);
