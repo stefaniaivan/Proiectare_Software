@@ -89,3 +89,7 @@ Framework-ul **Mockito** permite crearea obiectelor simulate folosind fie adnota
 - Metoda Mockito verify() de pe obiectul simulat verifică că o metodă este apelată cu anumiți parametri. În fiecare test, se verifica dacă metoda corespunzătoare a repository-ului este apelată cu parametrii așteptați. Acest lucru ajută la asigurarea faptului că serviciul interacționează corect cu repository-ul și apelează metodele dorite în funcție de cerințele testului.
 
 Aceasta structura permite izolarea logicii care se testeaza și se concentreaza pe comportamentul componentei în mod separat.
+
+## **_6. Diagrama UML_**
+
+![Javatpoint](UML.png)
