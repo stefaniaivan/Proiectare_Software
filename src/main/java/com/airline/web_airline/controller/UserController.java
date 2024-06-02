@@ -4,8 +4,11 @@ import com.airline.web_airline.model.Bilet;
 import com.airline.web_airline.model.User;
 import com.airline.web_airline.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,4 +88,17 @@ public class UserController {
     public List<User> list(){
         return userService.getAllUsers();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody User user) {
+        boolean isLogged = userService.login(user.getEmail(), user.getParola());
+        if (isLogged) {
+            return ResponseEntity.ok().body(Collections.singletonMap("message", "Successful Login!"));
+        } else {
+            return ResponseEntity.status(401).body(Collections.singletonMap("message", "Invalid email or password!"));
+        }
+    }
+
+
+
 }

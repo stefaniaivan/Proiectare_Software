@@ -13,4 +13,5 @@ public interface BiletService {
     public void deleteBiletById(int id);
     List<Bilet> findByOrasPlecare(String orasPlecare);
     List<Bilet> findByQuery(String orasPlecare, Optional<String> orasDestinatie, Optional<LocalDate> dataPlecare);
+
 }

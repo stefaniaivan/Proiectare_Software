@@ -26,7 +26,7 @@ public class UserTests {
 	//before - inainte de fiecare test se cheama ce exista in metoda before
 	@Test
 	public void saveUserTest() {
-		User expectedUser = new User(2, "Popa", "Daniela", "daniela92@yahoo.com");
+		User expectedUser = new User(2, "Popa", "Daniela", "daniela92@yahoo.com", "daniela123");
 		userService.saveUser(expectedUser);
 		verify(userRepositoryMock).save(expectedUser);
 	}

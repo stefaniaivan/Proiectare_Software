@@ -1,8 +1,7 @@
 package com.airline.web_airline;
 
 import com.airline.web_airline.model.Bilet;
-import com.airline.web_airline.model.Comanda;
-import com.airline.web_airline.repository.BiletRepository;
+import com.airline.web_airline.repository.BiletRepositoryContract;
 import com.airline.web_airline.service.BiletService;
 import com.airline.web_airline.service.BiletServiceImpl;
 import org.junit.Before;
@@ -18,7 +17,7 @@ import static org.mockito.Mockito.verify;
 public class BiletTests {
 
     @Mock
-    private BiletRepository biletRepositoryMock;
+    private BiletRepositoryContract biletRepositoryMock;
 
     private BiletService biletService;
 
@@ -32,27 +31,27 @@ public class BiletTests {
     public void saveBiletTest() {
         Bilet expectedBilet = new Bilet(1, "Bucuresti", "Timisoara", LocalDate.of(2024, 4, 15), 0, 80, "15:30", "600 RON" );
         biletService.saveBilet(expectedBilet);
-        verify(biletRepositoryMock).save(expectedBilet);
+        verify(biletRepositoryMock).saveTicket(expectedBilet);
     }
 
     @Test
     public void getAllBileteTest(){
         biletService.getAllBilete();
-        verify(biletRepositoryMock).findAll();
+        verify(biletRepositoryMock).getAllAvailableTickets();
     }
 
     @Test
     public void getBiletByIdTest(){
         int id = 2;
         biletService.getBiletById(id);
-        verify(biletRepositoryMock).findById(id);
+        verify(biletRepositoryMock).getTicketById(id);
     }
 
     @Test
     public void deleteBiletByIdTest(){
         int id = 2;
         biletService.deleteBiletById(id);
-        verify(biletRepositoryMock).deleteById(id);
+        verify(biletRepositoryMock).deleteTicketById(id);
     }
 
     @Test

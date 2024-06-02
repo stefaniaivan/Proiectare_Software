@@ -14,6 +14,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public UserServiceImpl(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
     /**
      * Aceasta metoda salveaza utilizatorul in baza de date.
      * @param user
@@ -50,5 +53,20 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @Override
+    public boolean login(String email, String parola) {
+        User user = userRepository.findByEmail(email);
+        if(user != null & user.getParola().equals(parola)){
+            return true;
+        }else
+            return false;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
 
 }

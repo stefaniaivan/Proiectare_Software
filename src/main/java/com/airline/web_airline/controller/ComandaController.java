@@ -64,5 +64,6 @@ public class ComandaController {
         }
         else
             return "Ticket with id " + id + " does not exist!";
+
     }
 }

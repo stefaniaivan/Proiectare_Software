@@ -1,8 +1,14 @@
 package com.airline.web_airline.service;
 
+import com.airline.web_airline.BiletNotification;
 import com.airline.web_airline.model.Bilet;
+import com.airline.web_airline.model.User;
 import com.airline.web_airline.repository.BiletRepository;
+import com.airline.web_airline.repository.BiletRepositoryContractImpl;
+import com.airline.web_airline.repository.BiletRepositoryContract;
+import com.airline.web_airline.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,8 +18,12 @@ import java.util.Optional;
 @Service
 public class BiletServiceImpl implements BiletService {
 
-    @Autowired
-    private BiletRepository biletRepository;
+    private final BiletRepositoryContract IBiletRepository;
+    private BiletNotification biletNotification;
+
+    public BiletServiceImpl(@Qualifier("biletRepositoryContractImpl") BiletRepositoryContract IBiletRepository){
+        this.IBiletRepository = IBiletRepository;
+    }
 
     /**
      * Aceasta metoda salveaza biletul in baza de date.
@@ -23,7 +33,7 @@ public class BiletServiceImpl implements BiletService {
      */
     @Override
     public Bilet saveBilet(Bilet bilet) {
-        return biletRepository.save(bilet);
+        return IBiletRepository.saveTicket(bilet);
     }
 
     /**
@@ -32,7 +42,7 @@ public class BiletServiceImpl implements BiletService {
      */
     @Override
     public List<Bilet> getAllBilete() {
-        return biletRepository.findAll();
+        return IBiletRepository.getAllAvailableTickets();
     }
 
     /**
@@ -42,12 +52,12 @@ public class BiletServiceImpl implements BiletService {
      */
     @Override
     public Optional<Bilet> getBiletById(int id) {
-        return biletRepository.findById(id);
+        return IBiletRepository.getTicketById(id);
     }
 
     @Override
     public List<Bilet> findByOrasPlecare(String orasPlecare) {
-        return biletRepository.findBiletsByOrasPlecare(orasPlecare);
+        return IBiletRepository.findBiletsByOrasPlecare(orasPlecare);
     }
 
     /**
@@ -55,11 +65,12 @@ public class BiletServiceImpl implements BiletService {
      * @param id
      */
     public void deleteBiletById(int id){
-        biletRepository.deleteById(id);
+        IBiletRepository.deleteTicketById(id);
     }
 
     @Override
     public List<Bilet> findByQuery(String orasPlecare, Optional<String> orasDestinatie, Optional<LocalDate> dataPlecare) {
-        return biletRepository.findBiletsByOrasPlecareAndOrasDestinatieAndDataPlecareIsAfter(orasPlecare,orasDestinatie,dataPlecare );
+        return IBiletRepository.findBiletsByOrasPlecareAndOrasDestinatieAndDataPlecareIsAfter(orasPlecare,orasDestinatie,dataPlecare );
+
     }
 }

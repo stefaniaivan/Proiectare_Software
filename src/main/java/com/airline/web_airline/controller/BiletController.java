@@ -1,10 +1,11 @@
 package com.airline.web_airline.controller;
 
-import com.airline.web_airline.NotificationService;
+import com.airline.web_airline.BiletNotification;
 import com.airline.web_airline.model.Bilet;
+import com.airline.web_airline.model.User;
 import com.airline.web_airline.service.BiletService;
+import com.airline.web_airline.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -17,8 +18,23 @@ import java.util.Optional;
 public class BiletController {
     @Autowired
     private BiletService biletService;
+
     @Autowired
-    private NotificationService notificationService;
+    private UserService userService;
+
+    private BiletNotification biletNotification;
+
+    @Autowired
+    public BiletController(BiletService biletService, UserService userService) {
+        this.biletNotification = new BiletNotification();
+        this.biletService = biletService;
+        this.userService = userService;
+
+        List<User> users = userService.getAllUsers();
+        for (User user : users) {
+            biletNotification.addObserver(user);
+        }
+    }
 
     /**
      * Aceasta metoda permite adaugarea unui obiect de tipul Bilet in baza de date.
@@ -58,6 +74,7 @@ public class BiletController {
         Optional<Bilet> existingTicketOptional = biletService.getBiletById(id);
         if(existingTicketOptional.isPresent()){
             Bilet existingTicket = existingTicketOptional.get();
+            boolean priceChanged = false;
             if (updatedBilet.getOrasPlecare() != null) {
                 existingTicket.setOrasPlecare(updatedBilet.getOrasPlecare());
             }
@@ -71,7 +88,10 @@ public class BiletController {
                 existingTicket.setDataPlecare(updatedBilet.getDataPlecare());
             }
             if (updatedBilet.getPret() != null) {
-                existingTicket.setPret(updatedBilet.getPret());
+                if (!updatedBilet.getPret().equals(existingTicket.getPret())) {
+                    priceChanged = true;
+                    existingTicket.setPret(updatedBilet.getPret());
+                }
             }
             if (updatedBilet.getLocuriDisponibile() != 0) {
                 existingTicket.setLocuriDisponibile(updatedBilet.getLocuriDisponibile());
@@ -80,7 +100,10 @@ public class BiletController {
                 existingTicket.setLocuriOcupate(updatedBilet.getLocuriOcupate());
             }
             biletService.saveBilet(existingTicket);
-            notificationService.notifyUserAboutTicketPrice(id, updatedBilet.getPret());
+            if (priceChanged) {
+                biletNotification.setPret(existingTicket.getPret());
+            }
+
             return "Ticket with ID " + id + " has been updated";
         }
         else
@@ -106,11 +129,23 @@ public class BiletController {
         return biletService.getBiletById(id);
     }
 
+    /**
+     * Aceasta metoda returneaza lista biletelor care au orasul de plecare specificat ca si parametru
+     * @param orasPlecare cautarea in baza de date se va face in functie de orasul de plecare
+     * @return se returneaza o lista ce contine toate biletele cu un anumit oras de plecare
+     */
     @GetMapping("/getByOrasPlecare")
     public List<Bilet> getBileteByOrasPlecare(@RequestParam String orasPlecare) {
         return biletService.findByOrasPlecare(orasPlecare);
     }
 
+    /**
+     * Aceasta metoda creeaza un query care permite o cautare mai complexa a biletelor in baza de date
+     * @param orasPlecare reprezinta orasul de plecare al unui bilet
+     * @param orasDestinatie reprezinta orasul desinatie al biletului
+     * @param dataPlecare reprezinta data la care are loc plecarea din orasul de plecare
+     * @return se returneaza lista biletelor ce indeplinesc criteriile mentionate de catre utilizator
+     */
     @GetMapping("/getByQuery")
     public List<Bilet> findByQuery(@RequestParam String orasPlecare, @RequestParam Optional<String> orasDestinatie, @RequestParam Optional<LocalDate> dataPlecare) {
         return biletService.findByQuery(orasPlecare, orasDestinatie, dataPlecare);

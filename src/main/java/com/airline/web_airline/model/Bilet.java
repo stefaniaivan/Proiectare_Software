@@ -21,7 +21,7 @@ public class Bilet {
     private int locuriDisponibile;
     private String oraPlecare;
     private String pret;
-
+    private boolean isAdmin;
     public String getPret() {
         return pret;
     }
@@ -39,6 +39,27 @@ public class Bilet {
     }
 
     public Bilet() {
+    }
+
+    public Bilet(int id, String orasPlecare, String orasDestinatie, LocalDate dataPlecare, int locuriOcupate, int locuriDisponibile, String oraPlecare, String pret){
+        this.id = id;
+        this.orasPlecare = orasPlecare;
+        this.orasDestinatie = orasDestinatie;
+        this.dataPlecare = dataPlecare;
+        this.locuriOcupate = locuriOcupate;
+        this.locuriDisponibile = locuriDisponibile;
+        this.oraPlecare = oraPlecare;
+        this.pret = pret;
+    }
+
+    public Bilet(String orasPlecare, String orasDestinatie, LocalDate dataPlecare, int locuriOcupate, int locuriDisponibile, String oraPlecare, String pret){
+        this.orasPlecare = orasPlecare;
+        this.orasDestinatie = orasDestinatie;
+        this.dataPlecare = dataPlecare;
+        this.locuriOcupate = locuriOcupate;
+        this.locuriDisponibile = locuriDisponibile;
+        this.oraPlecare = oraPlecare;
+        this.pret = pret;
     }
 
     public int getId() {
@@ -88,6 +109,5 @@ public class Bilet {
     public void setLocuriDisponibile(int locuriDisponibile) {
         this.locuriDisponibile = locuriDisponibile;
     }
-
 
 }

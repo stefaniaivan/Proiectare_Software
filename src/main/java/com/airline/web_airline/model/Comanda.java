@@ -42,6 +42,23 @@ public class Comanda {
     public Comanda(){
     }
 
+    public Comanda(int idComanda, int idBilet, int idUser, LocalDate orderDate, String totalAmount, String paymentStatus){
+        this.idComanda = idComanda;
+        this.idBilet = idBilet;
+        this.idUser = idUser;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+        this.paymentStatus = paymentStatus;
+    }
+
+    public Comanda(int idBilet, int idUser, LocalDate orderDate, String totalAmount, String paymentStatus){
+        this.idBilet = idBilet;
+        this.idUser = idUser;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+        this.paymentStatus = paymentStatus;
+    }
+
     public int getIdUser() {
         return idUser;
     }

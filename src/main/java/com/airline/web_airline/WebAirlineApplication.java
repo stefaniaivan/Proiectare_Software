@@ -9,6 +9,7 @@ public class WebAirlineApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebAirlineApplication.class, args);
+
 	}
 
 }

@@ -7,9 +7,19 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
 @Repository
-public interface BiletRepository extends JpaRepository<Bilet,Integer> {
+public interface BiletRepositoryContract extends JpaRepository<Bilet, Integer> {
+
+    Bilet saveTicket(Bilet bilet);
+
+    List<Bilet> getAllAvailableTickets();
+
+    Optional<Bilet> getTicketById(int id);
+
+    void deleteTicketById(int id);
+
     List<Bilet> findBiletsByOrasPlecare(String orasPlecare);
     List<Bilet> findBiletsByOrasPlecareAndOrasDestinatieAndDataPlecareIsAfter(String orasPlecare, Optional<String> orasDestinatie, Optional<LocalDate> dataPlecare);
+
+
 }
