@@ -93,3 +93,8 @@ Aceasta structura permite izolarea logicii care se testeaza și se concentreaza 
 ## **_6. Diagrama UML_**
 
 ![Javatpoint](UML.png)
+
+
+## **_7. Diagrama cazurilor de utilizare_**
+
+![Javatpoint](UseCase.png)
