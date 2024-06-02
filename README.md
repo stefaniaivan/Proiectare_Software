@@ -70,10 +70,11 @@ Atunci când starea subiectului observabil se schimbă, observatorii sunt notifi
  
 Implementarea acestui design pattern are ca scop notificarea utilizatorilor in legatura cu scaderea sau cresterea preturilor biletelor de avion, reprezentand o modificare importanta aparuta in sistem.
 
-Pentru realizarea acestei functionalitati, s-au urmat mai multi pasi:
-- **injectarea** UserService în NotificationService, in scopul realizarii unui design corespunzător și a unei separari clare a responsabilităților.
-- utilizarea unei liste de utilizatori pentru **observatori**: alegerea unei liste de utilizatori pentru a ține evidența observatorilor este o modalitate simplă și eficientă de a gestiona acești observatori.
-- adăugarea și eliminarea facilă a observatorilor cu ajutorul metodelor subscribe() si unsubscribe(), precum și notificarea acestora despre evenimente importante, cum ar fi modificările de preț ale biletelor.
+Pentru realizarea acestei functionalitati, s-au implementat urmatoarele:
+Interfața Observer - definește o metodă update care va fi apelată de subiect pentru a notifica observatorii.
+BiletNotification   menține o listă de observatori și oferă metode pentru a adăuga, elimina și notifica observatorii.
+Observatorii Concreți - User - implementează interfața Observer și defineste metoda update care va fi apelată atunci când subiectul își schimbă starea.
+Notificarea - când starea subiectului se schimbă, metoda 'setPret' este apelată, iar fiecare observator din listă este notificat prin apelarea metodei update.
 
 Prin urmare, prin realizarea unui apel HTTP in Postman, in care are loc modificarea pretului unui bilet de avion, va avea loc notificarea tuturor utilizatorilor cu privire la acest lucru.
 
@@ -98,3 +99,69 @@ Aceasta structura permite izolarea logicii care se testeaza și se concentreaza 
 ## **_7. Diagrama cazurilor de utilizare_**
 
 ![Javatpoint](UseCase.png)
+
+## **_8. Implementare Frontend_** 
+### Introducere
+
+Proiectul este dezvoltat utilizând React și Material-UI pentru a crea o interfață de utilizare intuitiva si usor de utilizat.
+
+### Tehnologii Utilizate
+
+React - bibliotecă JavaScript pentru construirea de interfețe de utilizator.
+Material-UI - bibliotecă de componente UI pentru React care implementează Material Design.
+Axios - bibliotecă pentru efectuarea de cereri HTTP.
+React Router - un set de instrumente pentru gestionarea rutelor în aplicațiile React.
+
+### Structura Proiectului
+
+**Componente Principale** 
+
+Appbar.js
+- Componentă care reprezintă bara de navigare superioară a aplicației.
+- Include butoane pentru conectare și înregistrare.
+
+Bilet.js
+- Componentă care permite utilizatorilor să caute bilete de avion.
+- Include câmpuri de text pentru orașul de plecare și destinație, selectoare de dată și un selector pentru numărul de pasageri.
+- Utilizatorul poate căuta bilete disponibile și poate naviga la o pagină cu rezultatele căutării.
+
+BileteDisponibile.js
+- Componentă care afișează biletele disponibile pe baza căutării utilizatorului.
+- Fiecare bilet include detalii despre zbor și un buton pentru rezervare.
+- Dacă utilizatorul nu este autentificat, se deschide fereastra de autentificare.
+
+CheckBox.js
+- Componentă pentru selectarea opțiunii de zbor doar dus sau dus-întors.
+
+Login.js
+- Componentă pentru fereastra de autentificare.
+- Include câmpuri de text pentru email și parolă și un buton de conectare.
+- Dacă autentificarea este reușită, fereastra se închide.
+
+Register.js
+- Componentă pentru fereastra de înregistrare.
+- Include câmpuri de text pentru nume, prenume, email și parolă și un buton de înregistrare.
+
+RezervareBilet.js
+- Componentă pentru completarea detaliilor pasagerilor după ce un bilet a fost rezervat.
+- Include câmpuri de text pentru numele pasagerilor și opțiuni de selecție pentru bagaj de mână sau bagaj de cală.
+- Afișează prețul total și permite finalizarea rezervării.
+
+ToateZborurile.js
+- Componentă care afișează toate zborurile disponibile în baza de date.
+- Permite utilizatorilor să rezerve bilete direct de aici.
+
+### Navigarea în Aplicație
+
+Navigarea în aplicație este gestionată folosind **React Router**. Rutele principale sunt:
+
+- /: pagina de start, unde utilizatorii pot căuta bilete.
+- /bilete-disponibile: Pagina cu biletele disponibile în urma unei căutări.
+- /toate-zborurile: Pagina care afișează toate zborurile disponibile.
+- /pasageri-detalii: Pagina pentru completarea detaliilor pasagerilor.
+
+### Managementul Stării
+
+useState: Utilizat pentru gestionarea stării locale a componentelor.
+useEffect: Utilizat pentru efectuarea de cereri HTTP și actualizarea stării în funcție de răspunsul serverului.
+useNavigate: Utilizat pentru navigarea între pagini.
